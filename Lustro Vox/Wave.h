@@ -12,9 +12,10 @@ public:
 	float getX() { return position.x; };
 	float getY() { return position.y; };
 	float getRadius() { return radius; };
-
-private:
+	float getForce() { return force; };
 	sf::Vector2<float> position;
+private:
+	
 	float radius{ 0 };
 	float force{ 0 };
 

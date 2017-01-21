@@ -2,8 +2,8 @@
 #define COLORS_H
 #include <SFML/Graphics.hpp>
 
-namespace s {
-	sf::Uint32 reverse_byte_order(sf::Uint32 col) {
+namespace colors {
+	static const sf::Uint32 reverse_byte_order(sf::Uint32 col) {
 		sf::Uint32 r = (col & 0x000000ff) << 24;
 		sf::Uint32 g = (col & 0x0000ff00) << 8;
 		sf::Uint32 b = (col & 0x00ff0000) >> 8;
@@ -13,7 +13,7 @@ namespace s {
 	}
 
 
-	sf::Uint32 COLORS[16] = {
+	static const sf::Uint32 COLORS[16] = {
 	reverse_byte_order(0x000000ff),
 	reverse_byte_order(0xFFFFFFff),
 	reverse_byte_order(0x68372Bff),

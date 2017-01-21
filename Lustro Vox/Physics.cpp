@@ -29,9 +29,10 @@ void Physics::stop()
 
 void Physics::update()
 {
-	particles = randomParticles(100);
 	while (run) {
+		particles = randomParticles(10000);
 		++ticks;
+		canvas.assign(width*height, colors::BLACK);
 		paintParticles(particles, canvas, width, height);
 		current_frame_lock.lock();
 		std::swap(current_frame, canvas);

@@ -11,14 +11,14 @@ class Physics {
 public:
 	Physics(int width, int height);
 	~Physics() = default;
-	std::vector<sf::Uint8> getFrame();
+	void getFrame(std::vector<sf::Uint8>& frame);
 	void start();
 	void stop();
-	
 private:
 	void update();
 	bool run{ true };
 	std::thread t;
+	sf::Mutex current_frame_lock;
 	int width, height;
 	unsigned int ticks;
 	sf::Clock time;

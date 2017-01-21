@@ -23,8 +23,13 @@ void Particle::updateForces(float grav)
 	if (speed.y > 0.001f)
 		speed.y = 0.001f;
 
-	speed.y *= 0.999f;
-	speed.x *= 0.999f;
+	speed.y *= 0.9999f;
+	speed.x *= 0.9999f;
+}
+
+void Particle::exertForce(sf::Vector2<float> forces)
+{
+	speed += forces;
 }
 
 void Particle::move()
@@ -38,6 +43,7 @@ void paintParticles(std::vector<Particle>& particles, std::vector<sf::Uint8>& ca
 	float size = (float)std::max(width, height);
 
 	int n = particles.size();
+	#pragma simd
 	#pragma omp parallel for
 	for (int i{ 0 }; i < n; ++i) {
 		auto p = particles[i];

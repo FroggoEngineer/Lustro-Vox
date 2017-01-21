@@ -35,6 +35,8 @@ int main()
 
 	LustroMidi midi;
 
+	std::vector<Wave> waves;
+
 	physics.start();
 	window.setVerticalSyncEnabled(true);
 	while (window.isOpen())

@@ -12,6 +12,7 @@ public:
 	float getX() { return position.x; };
 	float getY() { return position.y; };
 	void updateForces(float grav);
+	void exertForce(sf::Vector2<float> forces);
 	void move();
 
 };

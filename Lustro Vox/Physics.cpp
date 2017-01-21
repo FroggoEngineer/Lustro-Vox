@@ -11,7 +11,7 @@ Physics::Physics(int w, int h)
 	height = h;
 	canvas.assign(width*height, colors::BLACK);
 	current_frame.assign(width*height, colors::BLACK);
-	particles = randomParticles(10);
+	particles = randomParticles(5000);
 }
 
 void Physics::getFrame(std::vector<sf::Uint8>& frame) {
@@ -31,6 +31,11 @@ void Physics::stop()
 	t.join();
 }
 
+void Physics::addWave(Wave & wave)
+{
+	waves.push_back(wave);
+}
+
 void Physics::update()
 {
 	while (run) {
@@ -45,18 +50,24 @@ void Physics::update()
 		}
 
 		//Update forces on particles from waves
-		for (auto w : waves) {
-			
+		for (auto &w : waves) {
+			#pragma simd
 			#pragma omp parallel for
 			for (int i{ 0 }; i < n; ++i) {
 				auto &p = particles[i];
 				
+				float distance = sqrt(pow((p.getX() - w.getX()), 2) + pow((p.getY() - w.getY()), 2));
 				
-				
+				if (distance < (w.getRadius() + waveMargin) && distance >(w.getRadius() - waveMargin)) {
+					sf::Vector2<float> forceExert = p.position - w.position;
+					forceExert *= w.getForce();
+				}
+
 			}
 		}
 
 		//Update gravity and air resistance
+		#pragma simd
 		#pragma omp parallel for
 		for (int i{ 0 }; i < n; ++i) {
 
@@ -66,10 +77,12 @@ void Physics::update()
 			
 			if (p.getY() > 0.5f) {
 				p.speed.y = -1 * (float)abs(p.speed.y);
+				
 				if (rand() % 2 == 0)
 					p.speed.x = p.speed.y;
 				else
 					p.speed.x = -1*p.speed.y;
+					
 			}
 			else if (p.getX() < 0.0f) {
 				p.speed.x = (float)abs(p.speed.x);
@@ -90,7 +103,6 @@ void Physics::update()
 		current_frame_lock.lock();
 		std::swap(current_frame, canvas);
 		current_frame_lock.unlock();
-		std::cout << "Time per tick: " << time.getElapsedTime().asMilliseconds() << std::endl;
 		if (time.getElapsedTime().asMilliseconds() < 1) 
 			sf::sleep(sf::milliseconds(1 - time.getElapsedTime().asMilliseconds()));
 	}

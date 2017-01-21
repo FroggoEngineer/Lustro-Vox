@@ -6,10 +6,9 @@ class LustroMidi
 public:
 	LustroMidi();
 	~LustroMidi();
-	std::pair<unsigned char, unsigned char> getNote();
+	std::vector<std::pair<unsigned char, float> > getNote();
 
 private:
 	RtMidiIn midiIn;
-	std::vector<unsigned char> messages;
 };
 

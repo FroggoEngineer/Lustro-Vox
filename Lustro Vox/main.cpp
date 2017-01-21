@@ -44,7 +44,11 @@ int main()
 			break;
 		}
 		
-		midi.getNote();
+		auto notes = midi.getNote();
+		for (auto note : notes) {
+			std::cout << "Tone: " << (int)note.first << " Velocity: " << note.second << std::endl;
+		}
+
 
 		sf::Event event;
 		while (window.pollEvent(event))

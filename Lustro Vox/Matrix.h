@@ -17,6 +17,7 @@ public:
 	int sizeY() const;
 	Matrix getArea(int, int, int, int) noexcept;
 	void transpose();
+	void updatePixelArray(sf::Uint8* pixels);
 private:
 	int* a{ nullptr };
 	int width{ 0 };

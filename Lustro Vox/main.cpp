@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 #include <iostream>
+#include "Matrix.h"
 #include "Colors.h"
 
 using namespace std;
@@ -59,8 +60,10 @@ int main()
 		//--------------------------------------------------------------------
 
 		for (int i{ 0 }; i < height * width; ++i) {
-			pixels[i] = COLORS[i%4];
+			pixels[i] = s::COLORS[(int)round(rand()*i)%16];
 		}
+
+
 				
 		tex.update((sf::Uint8*)pixels);
 	

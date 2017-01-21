@@ -1,5 +1,7 @@
 #include <iostream>
+#include <SFML/Graphics.hpp>
 #include "Matrix.h"
+#include "Colors.h"
 using namespace std;
 
 
@@ -86,5 +88,14 @@ void Matrix::transpose() {
 	cerr << ba.what() << endl;
 	}
 	*/
+
+}
+
+void Matrix::updatePixelArray(sf::Uint8* pixels)
+{
+	
+	sf::Uint32* tmp = (sf::Uint32*)pixels;
+	for(int i{0}; i < (width*height); ++i)
+		tmp[i] = s::COLORS[a[i]];
 
 }

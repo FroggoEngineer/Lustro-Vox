@@ -1,5 +1,6 @@
 #include "Physics.h"
 #include "Colors.h"
+#include "Particle.h"
 
 Physics::Physics(int w, int h)
 {
@@ -28,13 +29,14 @@ void Physics::stop()
 
 void Physics::update()
 {
+	particles = randomParticles(100);
 	while (run) {
 		++ticks;
-		for (int i{ 0 }; i < height; ++i)
-			for (int j{ 0 }; j < width; ++j)
-				canvas.at(i*width+j) = colors::COLORS[(int)((16*(pow(sin(i),2)+pow(cos(j),2))))% 16];
+		paintParticles(particles, canvas, width, height);
+
 		current_frame_lock.lock();
 		std::swap(current_frame, canvas);
 		current_frame_lock.unlock();
 	}
 }
+

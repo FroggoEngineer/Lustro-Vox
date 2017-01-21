@@ -6,6 +6,7 @@
 #include <vector>
 #include "Colors.h"
 #include <thread>
+#include "Particle.h"
 class Physics {
 
 public:
@@ -24,5 +25,6 @@ private:
 	unsigned int ticks;
 	sf::Clock time;
 	std::vector<sf::Uint8> current_frame, canvas; 
+	std::vector<Particle> particles;
 };
 #endif

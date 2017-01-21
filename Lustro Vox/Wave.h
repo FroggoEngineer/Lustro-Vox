@@ -6,7 +6,7 @@
 class Wave {
 
 public:
-	Wave(float x, float y, float force);
+	Wave(float x, float y, float forces);
 	~Wave() = default;
 	void update();
 	float getX() { return position.x; };
@@ -14,10 +14,11 @@ public:
 	float getRadius() { return radius; };
 	float getForce() { return force; };
 	sf::Vector2<float> position;
+	sf::Vector2<float> getRealPos(float, float);
 private:
 	
-	float radius{ 0 };
-	float force{ 0 };
+	float radius{ 0.0f };
+	float force{ 0.0f };
 
 };
 

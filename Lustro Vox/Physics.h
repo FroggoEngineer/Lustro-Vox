@@ -17,7 +17,7 @@ public:
 	void getFrame(std::vector<sf::Uint8>& frame);
 	void start();
 	void stop();
-	void addWave(Wave& wave);
+	void addWave(std::vector<Wave>*);
 
 private:
 	float scaleX{ 0 }, scaleY{ 0 }; 
@@ -32,6 +32,6 @@ private:
 	sf::Clock time;
 	std::vector<sf::Uint8> current_frame, canvas; 
 	std::vector<Particle> particles;
-	std::vector<Wave> waves;
+	std::vector<Wave>* waves;
 };
 #endif

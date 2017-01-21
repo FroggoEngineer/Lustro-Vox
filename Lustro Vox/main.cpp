@@ -30,12 +30,16 @@ int main()
 
 	tex.create(width, height);
 	sf::Sprite sprite;
+	sf::CircleShape waveShape;
 
 	sf::Clock time;
 
 	LustroMidi midi;
 
-	std::vector<Wave> waves;
+	std::vector<Wave> *waves = new std::vector<Wave>;
+	Wave w{ 0.5f, 0.5f, 0.001f };
+	waves->push_back(w);
+	physics.addWave(waves);
 
 	physics.start();
 	window.setVerticalSyncEnabled(true);
@@ -89,11 +93,24 @@ int main()
 
 				
 		tex.update((sf::Uint8*)pixels);
-	
+		
+		//Pixel texture
 		sprite.setTexture(tex);
 		sprite.setScale(pixel_width, pixel_height);
 
+		//Waves
+		sf::Vector2<float> tmp{ 1.0f, 1.0f };
+		tmp *= (*waves)[0].getRadius()*window.getSize().x;
+		waveShape.setPosition((*waves)[0].getRealPos(width, height)-tmp);
+		waveShape.setRadius((*waves)[0].getRadius()*window.getSize().x);
+		waveShape.setOutlineThickness(2);
+		waveShape.setOutlineColor(sf::Color::Green);
+		waveShape.setFillColor(sf::Color::Transparent);
+		
+
+
 		window.draw(sprite);
+		window.draw(waveShape);
 
 
 		//--------------------------------------------------------------------

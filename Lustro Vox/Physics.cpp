@@ -32,10 +32,11 @@ void Physics::stop()
 	t.join();
 }
 
-void Physics::addWave(Wave & wave)
+void Physics::addWave(std::vector<Wave>* waveVec)
 {
-	waves.push_back(wave);
+	waves = waveVec;
 }
+
 
 void Physics::update()
 {
@@ -46,12 +47,13 @@ void Physics::update()
 		int n = particles.size();
 
 		//Update waves
-		for (auto &w : waves) {
-			w.update();
+		for (int i{ 0 }; i < waves->size(); ++i) {
+			(*waves)[i].update();
+			//std::cout << "Wave in Physics radius: " << waves[i].getRadius() << std::endl;
 		}
 
 		//Update forces on particles from waves
-		for (auto &w : waves) {
+		for (auto &w : (*waves)) {
 			#pragma simd
 			#pragma omp parallel for
 			for (int i{ 0 }; i < n; ++i) {
@@ -62,6 +64,8 @@ void Physics::update()
 				if (distance < (w.getRadius() + waveMargin) && distance >(w.getRadius() - waveMargin)) {
 					sf::Vector2<float> forceExert = p.position - w.position;
 					forceExert *= w.getForce();
+					p.exertForce(forceExert);
+					//std::cout << "Wave hit a particle" << std::endl;
 				}
 
 			}

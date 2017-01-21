@@ -11,22 +11,21 @@ sf::Uint32 reverse_byte_order(sf::Uint32 col) {
 }
 
 sf::Uint32 COLORS[16] = {
-// 0xAABBGGRR
-reverse_byte_order(0xff0000ff),
-reverse_byte_order(0x00ff00ff),
-reverse_byte_order(0x0000ffff),
-reverse_byte_order(0xffffffff),
-reverse_byte_order(0x0087ffff),
-reverse_byte_order(0xaf005fff),
-reverse_byte_order(0x1c1c1cff),
-reverse_byte_order(0xd75f00ff),
-reverse_byte_order(0x00afafff),
-reverse_byte_order(0xe4e4e4ff),
-reverse_byte_order(0x1c1c1cff),
-reverse_byte_order(0xd75f00ff),
-reverse_byte_order(0x585858ff),
-reverse_byte_order(0x626262ff),
-reverse_byte_order(0x808080ff),
-reverse_byte_order(0x5f5fafff),
+reverse_byte_order(0x000000),
+reverse_byte_order(0xFFFFFF),
+reverse_byte_order(0x68372B),
+reverse_byte_order(0x70A4B2),
+reverse_byte_order(0x6F3D86),
+reverse_byte_order(0x588D43),
+reverse_byte_order(0x352879),
+reverse_byte_order(0xB8C76F),
+reverse_byte_order(0x6F4F25),
+reverse_byte_order(0x433900),
+reverse_byte_order(0x9A6759),
+reverse_byte_order(0x444444),
+reverse_byte_order(0x6C6C6C),
+reverse_byte_order(0x9AD284),
+reverse_byte_order(0x6C5EB5),
+reverse_byte_order(0x959595)
 };
 

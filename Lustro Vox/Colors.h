@@ -12,6 +12,7 @@ namespace s {
 		return r | g | b | a;
 	}
 
+<<<<<<< HEAD
 	sf::Uint32 COLORS[16] = {
 	reverse_byte_order(0x000000),
 	reverse_byte_order(0xFFFFFF),
@@ -30,6 +31,26 @@ namespace s {
 	reverse_byte_order(0x6C5EB5),
 	reverse_byte_order(0x959595)
 	};
+=======
+sf::Uint32 COLORS[16] = {
+reverse_byte_order(0x000000ff),
+reverse_byte_order(0xFFFFFFff),
+reverse_byte_order(0x68372Bff),
+reverse_byte_order(0x70A4B2ff),
+reverse_byte_order(0x6F3D86ff),
+reverse_byte_order(0x588D43ff),
+reverse_byte_order(0x352879ff),
+reverse_byte_order(0xB8C76Fff),
+reverse_byte_order(0x6F4F25ff),
+reverse_byte_order(0x433900ff),
+reverse_byte_order(0x9A6759ff),
+reverse_byte_order(0x444444ff),
+reverse_byte_order(0x6C6C6Cff),
+reverse_byte_order(0x9AD284ff),
+reverse_byte_order(0x6C5EB5ff),
+reverse_byte_order(0x95959ff5)
+};
+>>>>>>> origin/master
 
 }
 #endif

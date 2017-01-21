@@ -20,6 +20,7 @@ int main()
 	int pixel_height = size.y / height;
 
 	sf::Uint8* canvas = new sf::Uint8[width*height];
+	std::vector<sf::Uint8> frame;
 
 	sf::RectangleShape shape(sf::Vector2f(pixel_width, pixel_height));
 
@@ -30,6 +31,9 @@ int main()
 	sf::Sprite sprite;
 
 	sf::Clock time;
+
+	physics.start();
+	window.setVerticalSyncEnabled(true);
 	while (window.isOpen())
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
@@ -63,8 +67,9 @@ int main()
 
 		// Get current frame from physics engine
 		// TODO: Mutex here plox
-		physics.update();
-		std::vector<sf::Uint8> frame;
+		// UPDATE: NO MUTEX
+		
+		
 		physics.getFrame(frame);
 		for (int i{ 0 }; i < height * width; ++i) {
 			pixels[i] = colors::COLORS[frame[i]];
@@ -83,6 +88,8 @@ int main()
 		//--------------------------------------------------------------------
 		window.display();
 	}
+
+	physics.stop();
 
 	return 0;
 }

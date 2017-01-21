@@ -15,6 +15,7 @@ public:
 	void start();
 	void stop();
 private:
+	float scaleX{ 0 }, scaleY{ 0 }; 
 	void update();
 	bool run{ true };
 	std::thread t;

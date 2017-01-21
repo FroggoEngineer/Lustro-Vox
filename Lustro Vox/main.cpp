@@ -4,6 +4,7 @@
 #include "Matrix.h"
 #include "Colors.h"
 #include "Physics.h"
+#include "LustroMidi.h"
 
 using namespace std;
 int main()
@@ -32,6 +33,8 @@ int main()
 
 	sf::Clock time;
 
+	LustroMidi midi;
+
 	physics.start();
 	window.setVerticalSyncEnabled(true);
 	while (window.isOpen())
@@ -40,6 +43,8 @@ int main()
 			window.close();
 			break;
 		}
+		
+		midi.getNote();
 
 		sf::Event event;
 		while (window.pollEvent(event))

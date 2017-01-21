@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Colors.h"
-
+#include <thread>
 class Physics {
 
 public:
@@ -14,8 +14,11 @@ public:
 	std::vector<sf::Uint8> getFrame();
 	void start();
 	void stop();
-	void update();
+	
 private:
+	void update();
+	bool run{ true };
+	std::thread t;
 	int width, height;
 	unsigned int ticks;
 	sf::Clock time;

@@ -14,6 +14,17 @@ std::vector<sf::Uint8> Physics::getFrame()
 	return current_frame;
 }
 
+void Physics::start()
+{
+	t = std::thread(&Physics::update, this);
+}
+
+void Physics::stop()
+{
+	run = false;
+	t.join();
+}
+
 void Physics::update()
 {
 	auto t = time.getElapsedTime().asMilliseconds();

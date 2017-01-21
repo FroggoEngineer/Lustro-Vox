@@ -1,10 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
+#include <iostream>
 
 using namespace std;
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1, 1), "SFML works!", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(320, 180), "SFML works!", sf::Style::Fullscreen);
 	sf::Vector2u size = window.getSize();
 
 	int width = 320;
@@ -16,7 +17,12 @@ int main()
 
 	sf::RectangleShape shape(sf::Vector2f(pixel_width, pixel_height));
 
-	shape.setFillColor(sf::Color::Green);
+	sf::Uint8* pixels = new sf::Uint8[width*height * 4];
+	sf::Texture tex;
+
+	tex.create(width, height);
+	sf::Sprite sprite;
+
 	sf::Clock time;
 	while (window.isOpen())
 	{
@@ -46,23 +52,24 @@ int main()
 
 
 		window.clear();
-		shape.setPosition(0, 0);
 		//Rendering
 		//--------------------------------------------------------------------
 
-		for (int i{ 0 }; i < width; i++)
-			for (int j{ 0 }; j < height; j++) {
-				int r = (int)round((sin(j)+1)*127);
-				int g = (int)round((cos(i)+1)*127);
-				int b = (int)round(time.getElapsedTime().asMilliseconds()%256);
-
-				shape.setFillColor(sf::Color(r, g, b));
-				shape.setPosition(i*pixel_width, j*pixel_height);
+		for (int j{ 0 }; j < height; j++)
+			for (int i{ 0 }; i < width; i++) {
+				pixels[(i + j*width) * 4] = (uint8_t)round((sin(i)+1)*127); //r
+				pixels[(i + j*width) * 4 + 1] = (uint8_t)round((cos(j)+1)*127); //g
+				//pixels[(i + j*width) * 4 + 2] = (uint8_t)round(time.getElapsedTime().asMilliseconds())%256; //b
+				pixels[(i + j*width) * 4 + 2] = (uint8_t)round(tan(i*j*rand()));
+				pixels[(i + j*width) * 4 + 3] = 255;
 			}
 				
-		window.draw(shape);
+		tex.update(pixels);
+	
+		sprite.setTexture(tex);
+		sprite.setScale(pixel_width, pixel_height);
 
-
+		window.draw(sprite);
 
 
 		//--------------------------------------------------------------------

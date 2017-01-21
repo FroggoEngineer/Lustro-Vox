@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Colors.h"
-
+#include <thread>
 class Physics {
 
 public:
@@ -14,8 +14,11 @@ public:
 	void getFrame(std::vector<sf::Uint8>& frame);
 	void start();
 	void stop();
-	void update();
 private:
+	float scaleX{ 0 }, scaleY{ 0 }; 
+	void update();
+	bool run{ true };
+	std::thread t;
 	sf::Mutex current_frame_lock;
 	int width, height;
 	unsigned int ticks;

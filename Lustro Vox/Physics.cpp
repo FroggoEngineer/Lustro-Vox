@@ -9,9 +9,10 @@ Physics::Physics(int w, int h)
 	current_frame.assign(width*height, colors::BLACK);
 }
 
-std::vector<sf::Uint8> Physics::getFrame()
-{
-	return current_frame;
+void Physics::getFrame(std::vector<sf::Uint8>& frame) {
+	current_frame_lock.lock();
+	frame = current_frame;
+	current_frame_lock.unlock();
 }
 
 void Physics::update()
@@ -19,5 +20,7 @@ void Physics::update()
 	auto t = time.getElapsedTime().asMilliseconds();
 	++ticks;
 	canvas.assign(width*height, colors::COLORS[ticks % 16]);
+	current_frame_lock.lock();
 	std::swap(current_frame, canvas);
+	current_frame_lock.unlock();
 }

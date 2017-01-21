@@ -14,9 +14,7 @@ int main()
 	int width = 320;
 	int height = 180;
 
-	Physics physics = Physics { width, height };
-
-
+	Physics physics { width, height };
 
 	int pixel_width = size.x / width;
 	int pixel_height = size.y / height;
@@ -66,9 +64,10 @@ int main()
 		// Get current frame from physics engine
 		// TODO: Mutex here plox
 		physics.update();
-		auto current_frame = physics.getFrame();
+		std::vector<sf::Uint8> frame;
+		physics.getFrame(frame);
 		for (int i{ 0 }; i < height * width; ++i) {
-			pixels[i] = colors::COLORS[current_frame[i]];
+			pixels[i] = colors::COLORS[frame[i]];
 		}
 
 

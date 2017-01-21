@@ -2,9 +2,9 @@
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML works!", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(1, 1), "SFML works!", sf::Style::Fullscreen);
 	
-	sf::RectangleShape shape(sf::Vector2f(1,1));
+	sf::RectangleShape shape(sf::Vector2f(10,10));
 
 	shape.setFillColor(sf::Color::Green);
 

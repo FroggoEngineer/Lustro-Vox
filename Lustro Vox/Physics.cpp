@@ -33,7 +33,6 @@ void Physics::update()
 	while (run) {
 		++ticks;
 		paintParticles(particles, canvas, width, height);
-
 		current_frame_lock.lock();
 		std::swap(current_frame, canvas);
 		current_frame_lock.unlock();

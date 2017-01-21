@@ -60,7 +60,7 @@ int main()
 		//--------------------------------------------------------------------
 
 		for (int i{ 0 }; i < height * width; ++i) {
-			pixels[i] = colors::COLORS[(int)round(rand()*i)%16];
+			pixels[i] = colors::COLORS[rand()%16];
 		}
 
 

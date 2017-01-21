@@ -4,6 +4,7 @@
 #include <iostream>
 #include <thread>
 #include <SFML/System.hpp>
+#include <math.h>
 
 Physics::Physics(int w, int h)
 {
@@ -75,14 +76,11 @@ void Physics::update()
 			p.updateForces(gravity);
 			p.move();
 			
-			if (p.getY() > 0.5f) {
-				p.speed.y = -1 * (float)abs(p.speed.y);
-				
-				if (rand() % 2 == 0)
-					p.speed.x = p.speed.y;
-				else
-					p.speed.x = -1*p.speed.y;
-					
+			if (p.getY() > 0.5625f) {
+				float sidediff = (((float)i) / ((float)n) * 2 - 1) * 1.0;
+				p.speed.y = -1.0 * (float)abs(p.speed.y);
+				p.speed.y *= abs(sidediff);
+				p.speed.x += sidediff*p.speed.y;
 			}
 			else if (p.getX() < 0.0f) {
 				p.speed.x = (float)abs(p.speed.x);

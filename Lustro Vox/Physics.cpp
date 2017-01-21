@@ -32,7 +32,7 @@ void Physics::update()
 		++ticks;
 		for (int i{ 0 }; i < height; ++i)
 			for (int j{ 0 }; j < width; ++j)
-				canvas.at(i*width+j) = colors::COLORS[(int)((16*(pow(sin(i),2)+pow(cos(j),2))))% 16];
+				canvas.at(i*width+j) = (int)((16*(pow(sin(i+ticks/10),2)+pow(cos(j+sin(ticks/20)),2))))% 16;
 		current_frame_lock.lock();
 		std::swap(current_frame, canvas);
 		current_frame_lock.unlock();

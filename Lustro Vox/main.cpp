@@ -59,8 +59,7 @@ int main()
 			for (int i{ 0 }; i < width; i++) {
 				pixels[(i + j*width) * 4] = (uint8_t)round((sin(i)+1)*127); //r
 				pixels[(i + j*width) * 4 + 1] = (uint8_t)round((cos(j)+1)*127); //g
-				//pixels[(i + j*width) * 4 + 2] = (uint8_t)round(time.getElapsedTime().asMilliseconds())%256; //b
-				pixels[(i + j*width) * 4 + 2] = (uint8_t)round(tan(i*j*rand()));
+				pixels[(i + j*width) * 4 + 2] = (uint8_t)round(tan(i*j*rand())); //b
 				pixels[(i + j*width) * 4 + 3] = 255;
 			}
 				

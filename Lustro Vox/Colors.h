@@ -29,7 +29,7 @@ namespace colors {
 	reverse_byte_order(0x6C6C6Cff),
 	reverse_byte_order(0x9AD284ff),
 	reverse_byte_order(0x6C5EB5ff),
-	reverse_byte_order(0x95959ff5)
+	reverse_byte_order(0x95959fff)
 	};
 
 	static const sf::Uint8 BLACK = 0;

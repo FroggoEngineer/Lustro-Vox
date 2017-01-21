@@ -8,7 +8,7 @@
 using namespace std;
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(320, 180), "SFML works!", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(640, 360), "SFML works!");
 	sf::Vector2u size = window.getSize();
 
 	int width = 320;

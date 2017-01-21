@@ -3,6 +3,7 @@
 #include <random>
 #include <iostream>
 #include <time.h>
+#include <omp.h>
 
 
 Particle::Particle(float x, float y)
@@ -17,7 +18,11 @@ Particle::~Particle()
 void paintParticles(std::vector<Particle>& particles, std::vector<sf::Uint8>& canvas, int width, int height)
 {
 	float size = (float)std::max(width, height);
-	for (auto p : particles) {
+
+	int n = particles.size();
+	#pragma omp parallel for
+	for (int i{ 0 }; i < n; ++i) {
+		auto p = particles[i];
 		int row = (int)round(p.position.x * size);
 		int column = (int)round(p.position.y * size);
 

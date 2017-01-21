@@ -3,21 +3,22 @@
 #define PHYSICS_H
 
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include "Colors.h"
 
 class Physics {
 
 public:
-	Physics() = default;
+	Physics(int width, int height);
 	~Physics() = default;
-	sf::Uint8* getFrame() {};
+	std::vector<sf::Uint8> getFrame();
 	void start();
 	void stop();
-private:
-	sf::Uint8* glob{ nullptr }; 
-	sf::Uint8* calcCanvas{ nullptr };
 	void update();
-
+private:
+	int width, height;
+	unsigned int ticks;
+	sf::Clock time;
+	std::vector<sf::Uint8> current_frame, canvas; 
 };
-
-
 #endif

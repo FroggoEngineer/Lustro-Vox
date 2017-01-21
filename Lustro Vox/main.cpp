@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Matrix.h"
 #include "Colors.h"
+#include "Physics.h"
 
 using namespace std;
 int main()
@@ -12,6 +13,9 @@ int main()
 
 	int width = 320;
 	int height = 180;
+
+	Physics physics = Physics { width, height };
+
 
 
 	int pixel_width = size.x / width;
@@ -59,8 +63,12 @@ int main()
 		//Rendering
 		//--------------------------------------------------------------------
 
+		// Get current frame from physics engine
+		// TODO: Mutex here plox
+		physics.update();
+		auto current_frame = physics.getFrame();
 		for (int i{ 0 }; i < height * width; ++i) {
-			pixels[i] = colors::COLORS[rand()%16];
+			pixels[i] = colors::COLORS[current_frame[i]];
 		}
 
 

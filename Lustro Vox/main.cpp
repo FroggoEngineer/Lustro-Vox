@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <math.h>
 #include <iostream>
+#include <random>
+#include <time.h>
 #include "Matrix.h"
 #include "Colors.h"
 #include "Physics.h"
@@ -49,6 +51,21 @@ int main()
 	{
 		
 	}
+
+	if (sf::Joystick::isConnected(0))
+	{
+		// joystick number 0 is connected
+		cout << "Joystick connected on 0: " << sf::Joystick::isConnected(0);
+		cout << sf::Joystick::getIdentification << endl;
+	}
+
+	std::default_random_engine generator(std::time(NULL) + rand());
+	std::uniform_real_distribution<float> distributionX(0.1, 0.3);
+	std::uniform_real_distribution<float> distributionY(0.2, 0.8);
+	auto shader_rnd = [&]() { return distributionX(generator); };
+	auto shader_intensity = [&]() { return distributionY(generator); };
+
+
 
 	while (window.isOpen())
 	{
@@ -112,7 +129,9 @@ int main()
 		//Pixel texture
 		sprite.setTexture(tex);
 		sprite.setScale(pixel_width, pixel_height);
+
 		window.draw(sprite);
+
 		// Remove too large waves
 		if (tick % 60 == 0) {
 			physics.delWaves();
@@ -129,9 +148,9 @@ int main()
 			waveShape.setOutlineColor(sf::Color(colors::COLORS[(i%15)+1]));
 
 			waveShape.setFillColor(sf::Color::Transparent);
-			//shader.setParameter("rnd", 0.5f);
-			//shader.setParameter("intensity", 1.5f);
-			window.draw(waveShape);
+			shader.setUniform("rnd", 0.5f);
+			shader.setUniform("intensity", 0.8f);
+			window.draw(waveShape, &shader);
 		}
 
 		//--------------------------------------------------------------------

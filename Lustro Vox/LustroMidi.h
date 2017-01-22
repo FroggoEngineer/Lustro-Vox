@@ -1,5 +1,6 @@
 #pragma once
 #include "rtmidi-2.1.1\RtMidi.h"
+#include "LustroSynth.h"
 
 class LustroMidi
 {
@@ -10,5 +11,6 @@ public:
 
 private:
 	RtMidiIn midiIn;
+	LustroSynth sound;
 };
 

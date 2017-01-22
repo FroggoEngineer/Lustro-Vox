@@ -9,6 +9,9 @@ LustroMidi::LustroMidi()
 	if (midiIn.getPortCount() > 0) {
 		midiIn.openPort(0);
 	}
+
+	float notes[127];
+	sound.start(notes);
 }
 
 

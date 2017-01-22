@@ -118,6 +118,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="LustroMidi.cpp" />
+    <ClCompile Include="LustroSynth.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="Colors.h" />
     <ClInclude Include="LustroMidi.h" />
+    <ClInclude Include="LustroSynth.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Physics.h" />

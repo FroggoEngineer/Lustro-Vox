@@ -12,7 +12,7 @@ Physics::Physics(int w, int h)
 	height = h;
 	canvas.assign(width*height, colors::BLACK);
 	current_frame.assign(width*height, colors::BLACK);
-	particles = randomParticles(1000);
+	particles = randomParticles(5000);
 }
 
 void Physics::getFrame(std::vector<sf::Uint8>& frame) {
@@ -44,7 +44,7 @@ void Physics::delWaves()
 {
 	int i{ 0 };
 	while (i < waves->size()) {
-		if ((*waves)[i].getRadius() > 1.777f) {
+		if ((*waves)[i].getRadius() > 0.8f) {
 			(*waves)[i] = waves->back();
 			waves->pop_back();
 		}

@@ -44,7 +44,7 @@ void Physics::delWaves()
 {
 	int i{ 0 };
 	while (i < waves->size()) {
-		if ((*waves)[i].getRadius() > 0.8f) {
+		if ((*waves)[i].getRadius() > 0.5f) {
 			(*waves)[i] = waves->back();
 			waves->pop_back();
 		}

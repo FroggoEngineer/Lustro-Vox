@@ -55,7 +55,8 @@ int main()
 	if (sf::Joystick::isConnected(0))
 	{
 		// joystick number 0 is connected
-		cout << "Joystick connected on 0: " << sf::Joystick::isConnected(0);
+		cout << "Joystick connected on 0: " << sf::Joystick::isConnected(0) << endl;
+		cout << "Joystick connected on 1: " << sf::Joystick::isConnected(1) << endl;
 		cout << sf::Joystick::getIdentification << endl;
 	}
 

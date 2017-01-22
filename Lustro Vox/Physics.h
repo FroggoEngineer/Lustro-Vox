@@ -21,7 +21,7 @@ public:
 	void addWave(Wave wave);
 	void delWaves();
 	void update();
-
+	void addParticles(int, float, float);
 private:
 	float scaleX{ 0 }, scaleY{ 0 }; 
 	bool run{ true };
@@ -34,5 +34,6 @@ private:
 	std::vector<sf::Uint8> current_frame, canvas; 
 	std::vector<Particle> particles;
 	std::vector<Wave>*waves;
+	int partIndex{ 0 };
 };
 #endif

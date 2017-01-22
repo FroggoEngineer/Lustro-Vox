@@ -3,6 +3,8 @@
 #include "Particle.h"
 #include <iostream>
 #include <thread>
+#include <random>
+#include <time.h>
 #include <SFML/System.hpp>
 #include <math.h>
 
@@ -12,7 +14,7 @@ Physics::Physics(int w, int h)
 	height = h;
 	canvas.assign(width*height, colors::BLACK);
 	current_frame.assign(width*height, colors::BLACK);
-	particles = randomParticles(5000);
+	particles = randomParticles(0);
 }
 
 void Physics::getFrame(std::vector<sf::Uint8>& frame) {
@@ -44,7 +46,7 @@ void Physics::delWaves()
 {
 	int i{ 0 };
 	while (i < waves->size()) {
-		if ((*waves)[i].getRadius() > 0.5f) {
+		if ((*waves)[i].getRadius() > 0.1f) {
 			(*waves)[i] = waves->back();
 			waves->pop_back();
 		}
@@ -60,6 +62,19 @@ void Physics::update()
 		sf::Clock time;
 		++ticks;
 		canvas.assign(width*height, colors::BLACK);
+
+		while (particles.size() > 10000) {
+			if (partIndex >= particles.size())
+				partIndex = 0;
+
+			particles[partIndex] = particles.back();
+			particles.pop_back();
+			std::cout << particles.size() << std::endl;
+
+			partIndex++;
+		}
+
+
 		int n = particles.size();
 
 		//Update waves
@@ -119,5 +134,25 @@ void Physics::update()
 		
 		//Send the new canvas out for rendering
 		std::swap(current_frame, canvas);
+}
+
+void Physics::addParticles(int amount, float x, float y)
+{
+
+	std::default_random_engine generator(std::time(NULL) + rand());
+	std::uniform_real_distribution<float> distributionX(-1.0, 1.0);
+	std::uniform_real_distribution<float> distributionY(0.5, 1.0);
+	auto rx = [&]() { return distributionX(generator); };
+	auto ry = [&]() { return distributionY(generator); };
+
+	for (int i{ 0 }; i < amount; ++i) {
+		Particle p{ x,y };
+		p.speed.x = 0.0005f * rx();
+		p.speed.y = 0.0005f * ry();
+		p.color = (rand() % 15) + 1;
+		particles.push_back(p);
+
+	}
+	std::cout << "Particle size after pushing new: " << particles.size() << std::endl;
 }
 

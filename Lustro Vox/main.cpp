@@ -60,6 +60,11 @@ int main()
 		cout << sf::Joystick::getIdentification << endl;
 	}
 
+	sf::RectangleShape player1;
+	sf::RectangleShape player2;
+	player1.setPosition(180, 5);
+	player2.setPosition(180, 100);
+
 	std::default_random_engine generator(std::time(NULL) + rand());
 	std::uniform_real_distribution<float> distributionX(0.1, 0.3);
 	std::uniform_real_distribution<float> distributionY(0.2, 0.8);
@@ -93,15 +98,33 @@ int main()
 
 
 
-			//Input events
-			//---------------------------------------------------
 			
 
+		}
+		//Input events
+		//---------------------------------------------------
+		float topAxis = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
 
-			//---------------------------------------------------
 
+		if (topAxis > 30) {
+			sf::Vector2<float> tmp = player1.getPosition();
+			tmp.x = tmp.x + 5;
+			player1.setPosition(tmp);
+		}
+		else if (topAxis < -30) {
+			sf::Vector2<float> tmp = player1.getPosition();
+			tmp.x = tmp.x - 5;
+			player1.setPosition(tmp);
 		}
 
+
+		if (sf::Joystick::isButtonPressed(0, 1)) {
+			physics.addParticles(10, (player1.getPosition().x + 5.f) / (float)640, (player1.getPosition().y + 10.f) / (float)640);
+		}
+
+
+
+		//---------------------------------------------------
 
 		window.clear();
 		//Rendering
@@ -138,7 +161,12 @@ int main()
 			physics.delWaves();
 
 		}
-		
+
+		player1.setSize(sf::Vector2<float>(10*pixel_width, 10*pixel_height));
+		player1.setFillColor(sf::Color::Red);
+		window.draw(player1);
+
+
 		//Waves
 		for (int i{ 0 }; i < waves->size(); ++i) {
 			sf::Vector2<float> tmp{ 1.0f, 1.0f };
@@ -157,6 +185,8 @@ int main()
 		//--------------------------------------------------------------------
 		++tick;
 		window.display();
+
+		
 
 	}
 

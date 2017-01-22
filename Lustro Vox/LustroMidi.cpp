@@ -29,6 +29,13 @@ std::vector<std::pair<unsigned char, float> > LustroMidi::getNote()
 		if (message.size() == 3 && message[0] == 144) {
 			res.push_back({ message[1] % 12, ((float)message[2]) / 127.0f });
 		}
+
+
+		float a = 440.0f; // a is 440 hz...
+		float x = (float)message[1];
+	    float freq = (a / 32.0f) * pow(2.0f,((x - 9.0f) / 12.0f));
+
+		sound.addSquareWave(freq, 2000.0f*((float)message[2]) / 127.0f);
 		midiIn.getMessage(&message);
 	}
 

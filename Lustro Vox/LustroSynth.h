@@ -16,7 +16,7 @@ private:
 	float* tones;
 	bool run = { true };
 	std::thread t;
-	static const unsigned BUFFER_SIZE = 2048;
+	static const unsigned BUFFER_SIZE = 22050;
 	static const unsigned SAMPLE_RATE = 44100;
 	unsigned ticks{ 0 };
 	void clearRaw(sf::Int16* raw);

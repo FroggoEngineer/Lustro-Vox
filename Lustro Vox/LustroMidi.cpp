@@ -35,7 +35,7 @@ std::vector<std::pair<unsigned char, float> > LustroMidi::getNote()
 		float x = (float)message[1];
 	    float freq = (a / 32.0f) * pow(2.0f,((x - 9.0f) / 12.0f));
 
-		sound.addSquareWave(freq, 2000.0f*((float)message[2]) / 127.0f);
+		sound.addSquareWave(freq, 4000.0f*((float)message[2]) / 127.0f);
 		midiIn.getMessage(&message);
 	}
 

@@ -32,27 +32,27 @@ void LustroSynth::update()
 {
 		addSquareWave(440.0f, 3000.0f);
 		Buffer.loadFromSamples(raw, BUFFER_SIZE, 1, SAMPLE_RATE);
-		sf::Sound Sound;
+		sf::Sound sound;
 
-		Sound.setBuffer(Buffer);
-		Sound.setLoop(true);
-		Sound.play();
+		sound.setBuffer(Buffer);
+		sound.setLoop(true);
+		sound.play();
 		while (run) {
 			for (int i{ 0 }; i < BUFFER_SIZE; ++i){
 				raw[i] = (int)((float)raw[i] * 0.99f);
 			}
 			
-	//		sf::Int16* ugly = const_cast<sf::Int16*>(Buffer.getSamples());
-	//		for (int i{ 0 }; i < BUFFER_SIZE; ++i) {
-	//			ugly[i] = raw[i];
-	//	}
+//		sf::Int16* ugly = const_cast<sf::Int16*>(sound.getBuffer()->getSamples());
+//			for (int i{ 0 }; i < BUFFER_SIZE; ++i) {
+//				ugly[i] = raw[i];
+//		}
 	    	Buffer.loadFromSamples(raw, BUFFER_SIZE, 1, SAMPLE_RATE);
-			Sound.setBuffer(Buffer);
-			Sound.play();
+//			sound.setBuffer(Buffer);
+			sound.play();
 			ticks += 1;
 			sf::sleep(sf::milliseconds(10));
 		}
-		Sound.stop();
+		sound.stop();
 }
 
 void LustroSynth::addSquareWave(float freq, float amplitude)
@@ -63,7 +63,7 @@ void LustroSynth::addSquareWave(float freq, float amplitude)
 	for (unsigned i{ 0 }; i < BUFFER_SIZE; ++i) {
 //		raw[i] += 0.3f * amplitude * sign(sin(((float)i) * freq * TWO_PI * invrate ));
 		raw[i] += amplitude * cos(((float)i) * freq * TWO_PI * invrate );
-		raw[i] += 0.5f * amplitude * cos(((float)i) * (freq*1.5) * TWO_PI * invrate );
+		raw[i] += 0.5f * amplitude * cos(((float)i) * (freq*1.5+2.0) * TWO_PI * invrate );
 	}
 }
 

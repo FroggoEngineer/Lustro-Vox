@@ -14,7 +14,7 @@ Physics::Physics(int w, int h)
 	height = h;
 	canvas.assign(width*height, colors::BLACK);
 	current_frame.assign(width*height, colors::BLACK);
-	particles = randomParticles(0);
+	particles = randomParticles(1000);
 }
 
 void Physics::getFrame(std::vector<sf::Uint8>& frame) {
@@ -149,7 +149,7 @@ void Physics::addParticles(int amount, float x, float y)
 		Particle p{ x,y };
 		p.speed.x = 0.0005f * rx();
 		p.speed.y = 0.0005f * ry();
-		p.color = (rand() % 15) + 1;
+		p.color = (rand() % 7) + 1;
 		particles.push_back(p);
 
 	}

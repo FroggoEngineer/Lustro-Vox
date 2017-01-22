@@ -72,7 +72,7 @@ std::vector<Particle> randomParticles(int count) {
 
 	for (int i{ 0 }; i < count; ++i) {
 		Particle p{rx(), ry()};
-		p.color = (rand() % 15) + 1;
+		p.color = (rand() % 7) + 1;
 		particles.push_back(p);
 	}
 	return particles;

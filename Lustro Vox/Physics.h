@@ -25,8 +25,8 @@ public:
 private:
 	float scaleX{ 0 }, scaleY{ 0 }; 
 	bool run{ true };
-	float gravity{ 0.0000102f };
-	float waveMargin{ 0.001f };
+	float gravity{ 0.0000202f };
+	float waveMargin{ 0.003f };
 	std::thread t;
 	int width, height;
 	unsigned int ticks;

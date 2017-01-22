@@ -99,13 +99,13 @@ void Physics::update()
 				float sidediff = (((float)i) / ((float)n) * 2 - 1) * 1.0;
 				p.speed.y = -1.0 * (float)abs(p.speed.y);
 				p.speed.y *= abs(sidediff);
-				p.speed.x += sidediff*p.speed.y;
+				//p.speed.x += sidediff*p.speed.y;
 			}
 			else if (p.getY() <= 0.001f) {
 				float sidediff = (((float)i) / ((float)n) * 2 - 1) * 1.0;
 				p.speed.y = (float)abs(p.speed.y);
 				p.speed.y *= abs(sidediff);
-				p.speed.x += sidediff*p.speed.y;
+				//p.speed.x += sidediff*p.speed.y;
 			}
 			else if (p.getX() <= 0.00f) {
 				p.speed.x = (float)abs(p.speed.x);

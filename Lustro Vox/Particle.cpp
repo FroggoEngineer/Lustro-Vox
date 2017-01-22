@@ -21,11 +21,11 @@ Particle::~Particle()
 void Particle::updateForces(float grav)
 {
 	speed.y += grav;
-	if (speed.y > 0.001f)
-		speed.y = 0.001f;
+	if (speed.y > 0.0015f)
+		speed.y = 0.0015f;
 
 	speed.y *= 0.99999f;
-	speed.x *= 0.999f;
+	speed.x *= 0.99f;
 }
 
 void Particle::exertForce(sf::Vector2<float> forces)

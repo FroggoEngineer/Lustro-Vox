@@ -63,13 +63,12 @@ void Physics::update()
 		++ticks;
 		canvas.assign(width*height, colors::BLACK);
 
-		while (particles.size() > 10000) {
+		while (particles.size() > 20000) {
 			if (partIndex >= particles.size())
 				partIndex = 0;
 
 			particles[partIndex] = particles.back();
 			particles.pop_back();
-			std::cout << particles.size() << std::endl;
 
 			partIndex++;
 		}
@@ -147,12 +146,16 @@ void Physics::addParticles(int amount, float x, float y)
 
 	for (int i{ 0 }; i < amount; ++i) {
 		Particle p{ x,y };
-		p.speed.x = 0.0005f * rx();
-		p.speed.y = 0.0005f * ry();
+		p.speed.x = 0.005f * rx();
+		p.speed.y = 0.005f * ry();
 		p.color = (rand() % 15) + 1;
 		particles.push_back(p);
 
 	}
-	std::cout << "Particle size after pushing new: " << particles.size() << std::endl;
+}
+
+void Physics::spawnParticles(int amount)
+{
+	particles = randomParticles(amount);
 }
 

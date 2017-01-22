@@ -22,6 +22,7 @@ public:
 	void delWaves();
 	void update();
 	void addParticles(int, float, float);
+	void spawnParticles(int);
 private:
 	float scaleX{ 0 }, scaleY{ 0 }; 
 	bool run{ true };

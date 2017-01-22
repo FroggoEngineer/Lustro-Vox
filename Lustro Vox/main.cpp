@@ -119,7 +119,10 @@ int main()
 
 
 		if (sf::Joystick::isButtonPressed(0, 1)) {
-			physics.addParticles(10, (player1.getPosition().x + 5.f) / (float)640, (player1.getPosition().y + 10.f) / (float)640);
+			physics.addParticles(50, (player1.getPosition().x + 5.f) / (float)640, (player1.getPosition().y + 10.f) / (float)640);
+		}
+		else if (sf::Joystick::isButtonPressed(0, 3)) {
+			physics.spawnParticles(10000);
 		}
 
 

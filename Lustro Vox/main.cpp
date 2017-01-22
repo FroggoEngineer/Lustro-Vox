@@ -9,11 +9,11 @@
 using namespace std;
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(640, 360), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(640, 360), "SFML works!", sf::Style::Fullscreen);
 	sf::Vector2u size = window.getSize();
 
-	int width = 320;
-	int height = 180;
+	int width = 160;
+	int height = 90;
 
 	Physics physics { width, height };
 
@@ -41,7 +41,6 @@ int main()
 	std::vector<Wave> *waves = new std::vector<Wave>;
 	physics.setWaves(waves);
 
-	physics.start();
 	window.setVerticalSyncEnabled(true);
 	while (window.isOpen())
 	{
@@ -53,7 +52,7 @@ int main()
 		auto notes = midi.getNote();
 		for (auto note : notes) {
 			std::cout << "Tone: " << (int)note.first << " Velocity: " << note.second << std::endl;
-			Wave w1{ ((float)note.first)/11.0f, 0.5626f, 0.07f*note.second, 0.003f*note.second };
+			Wave w1{ ((float)note.first)/11.0f, 0.5626f, 0.1f*note.second, 0.003f/note.second };
 			physics.addWave(w1);
 		}
 
@@ -85,9 +84,14 @@ int main()
 		// Get current frame from physics engine
 		// TODO: Mutex here plox
 		// UPDATE: NO MUTEX
+		// UPDATE: NO THREADS
+
+		physics.update();
 		
 		
 		physics.getFrame(frame);
+
+		#pragma omp parallel for
 		for (int i{ 0 }; i < height * width; ++i) {
 			pixels[i] = colors::COLORS[frame[i]];
 		}
@@ -111,9 +115,9 @@ int main()
 		for (int i{ 0 }; i < waves->size(); ++i) {
 			sf::Vector2<float> tmp{ 1.0f, 1.0f };
 			tmp *= (*waves)[i].getRadius()*window.getSize().x;
-			waveShape.setPosition(((*waves)[i].getRealPos(width*2.0f, height*3.5555555f)-tmp)); // Don't ask...
+			waveShape.setPosition(((*waves)[i].getRealPos(window.getSize().x, window.getSize().x)-tmp)); // Don't ask...
 			waveShape.setRadius((*waves)[i].getRadius()*window.getSize().x);
-			waveShape.setOutlineThickness(1);
+			waveShape.setOutlineThickness(window.getSize().x/100);
 			waveShape.setOutlineColor(sf::Color(colors::COLORS[(i%15)+1]));
 
 			waveShape.setFillColor(sf::Color::Transparent);
@@ -127,7 +131,6 @@ int main()
 
 	}
 
-	physics.stop();
 
 	return 0;
 }

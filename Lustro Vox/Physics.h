@@ -20,16 +20,14 @@ public:
 	void setWaves(std::vector<Wave>*);
 	void addWave(Wave wave);
 	void delWaves();
+	void update();
 
 private:
-	void update();
 	float scaleX{ 0 }, scaleY{ 0 }; 
 	bool run{ true };
 	float gravity{ 0.0000102f };
 	float waveMargin{ 0.001f };
 	std::thread t;
-	sf::Mutex current_frame_lock;
-	sf::Mutex waves_lock;
 	int width, height;
 	unsigned int ticks;
 	sf::Clock time;

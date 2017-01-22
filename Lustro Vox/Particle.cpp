@@ -24,8 +24,8 @@ void Particle::updateForces(float grav)
 	if (speed.y > 0.001f)
 		speed.y = 0.001f;
 
-	speed.y *= 0.999999f;
-	speed.x *= 0.99f;
+	speed.y *= 0.99999f;
+	speed.x *= 0.999f;
 }
 
 void Particle::exertForce(sf::Vector2<float> forces)
@@ -47,7 +47,7 @@ void paintParticles(std::vector<Particle>& particles, std::vector<sf::Uint8>& ca
 	#pragma simd
 	#pragma omp parallel for
 	for (int i{ 0 }; i < n; ++i) {
-		auto p = particles[i];
+		auto &p = particles[i];
 		if (p.position.x > 1.0f || p.position.y > 1.0f || p.position.x < 0.0f || p.position.y < 0.0f) continue;
 		
 		int row = (int)round(p.position.y * size);

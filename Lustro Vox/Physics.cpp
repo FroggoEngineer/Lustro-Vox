@@ -12,13 +12,11 @@ Physics::Physics(int w, int h)
 	height = h;
 	canvas.assign(width*height, colors::BLACK);
 	current_frame.assign(width*height, colors::BLACK);
-	particles = randomParticles(5000);
+	particles = randomParticles(1000);
 }
 
 void Physics::getFrame(std::vector<sf::Uint8>& frame) {
-	current_frame_lock.lock();
 	frame = current_frame;
-	current_frame_lock.unlock();
 }
 
 void Physics::start()
@@ -34,53 +32,43 @@ void Physics::stop()
 
 void Physics::setWaves(std::vector<Wave>* waveVec)
 {
-	waves_lock.lock();
 	waves = waveVec;
-	waves_lock.unlock();
 }
 
 void Physics::addWave(Wave wave)
 {
-	waves_lock.lock();
 	waves->push_back(wave);
-	waves_lock.unlock();
 }
 
 void Physics::delWaves()
 {
-	waves_lock.lock();
 	int i{ 0 };
 	while (i < waves->size()) {
 		if ((*waves)[i].getRadius() > 1.777f) {
 			(*waves)[i] = waves->back();
 			waves->pop_back();
-			std::cout << "Deleted wave!" << std::endl;
 		}
 		else {
 			++i;
 		}
 	}
-	waves_lock.unlock();
 }
 
 
 void Physics::update()
 {
-	while (run) {
 		sf::Clock time;
 		++ticks;
 		canvas.assign(width*height, colors::BLACK);
 		int n = particles.size();
 
 		//Update waves
-		waves_lock.lock();
 		for (int i{ 0 }; i < waves->size(); ++i) {
 			(*waves)[i].update();
-			//std::cout << "Wave in Physics radius: " << waves[i].getRadius() << std::endl;
 		}
 
 		//Update forces on particles from waves
-		for (auto &w : (*waves)) {
+		for (auto w : (*waves)) {
 			#pragma simd
 			#pragma omp parallel for
 			for (int i{ 0 }; i < n; ++i) {
@@ -91,13 +79,12 @@ void Physics::update()
 				if (distance < (w.getRadius() + waveMargin) && distance >(w.getRadius() - waveMargin)) {
 					sf::Vector2<float> forceExert = p.position - w.position;
 					forceExert *= w.getForce();
-					p.exertForce(forceExert*(w.getRadius()));
-					//std::cout << "Wave hit a particle" << std::endl;
+					p.exertForce(forceExert/(50*w.getRadius()));
 				}
 
 			}
 		}
-		waves_lock.unlock();
+
 
 		//Update gravity and air resistance
 		#pragma simd
@@ -126,20 +113,11 @@ void Physics::update()
 			else if (p.getX() > 1.0f) {
 				p.speed.x = -1 * (float)abs(p.speed.x);
 			}
-
-				
-
 		}
-
 		//Paint particles to canvas
 		paintParticles(particles, canvas, width, height);
 		
 		//Send the new canvas out for rendering
-		current_frame_lock.lock();
 		std::swap(current_frame, canvas);
-		current_frame_lock.unlock();
-		if (time.getElapsedTime().asMilliseconds() < 1) 
-			sf::sleep(sf::milliseconds(1 - time.getElapsedTime().asMilliseconds()));
-	}
 }
 

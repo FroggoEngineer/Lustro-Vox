@@ -34,12 +34,12 @@ int main()
 
 	sf::Clock time;
 
+	int tick{ 0 };
+
 	LustroMidi midi;
 
 	std::vector<Wave> *waves = new std::vector<Wave>;
-	Wave w{ 0.5f, 0.5f, 0.001f };
-	waves->push_back(w);
-	physics.addWave(waves);
+	physics.setWaves(waves);
 
 	physics.start();
 	window.setVerticalSyncEnabled(true);
@@ -53,6 +53,8 @@ int main()
 		auto notes = midi.getNote();
 		for (auto note : notes) {
 			std::cout << "Tone: " << (int)note.first << " Velocity: " << note.second << std::endl;
+			Wave w1{ ((float)note.first)/11.0f, 0.5626f, 0.07f*note.second, 0.003f*note.second };
+			physics.addWave(w1);
 		}
 
 
@@ -93,28 +95,36 @@ int main()
 
 				
 		tex.update((sf::Uint8*)pixels);
+		window.draw(sprite);
 		
 		//Pixel texture
 		sprite.setTexture(tex);
 		sprite.setScale(pixel_width, pixel_height);
 
+		// Remove too large waves
+		if (tick % 60 == 0) {
+			physics.delWaves();
+
+		}
+
 		//Waves
-		sf::Vector2<float> tmp{ 1.0f, 1.0f };
-		tmp *= (*waves)[0].getRadius()*window.getSize().x;
-		waveShape.setPosition((*waves)[0].getRealPos(width, height)-tmp);
-		waveShape.setRadius((*waves)[0].getRadius()*window.getSize().x);
-		waveShape.setOutlineThickness(2);
-		waveShape.setOutlineColor(sf::Color::Green);
-		waveShape.setFillColor(sf::Color::Transparent);
-		
+		for (int i{ 0 }; i < waves->size(); ++i) {
+			sf::Vector2<float> tmp{ 1.0f, 1.0f };
+			tmp *= (*waves)[i].getRadius()*window.getSize().x;
+			waveShape.setPosition(((*waves)[i].getRealPos(width*2.0f, height*3.5555555f)-tmp)); // Don't ask...
+			waveShape.setRadius((*waves)[i].getRadius()*window.getSize().x);
+			waveShape.setOutlineThickness(1);
+			waveShape.setOutlineColor(sf::Color(colors::COLORS[(i%15)+1]));
 
+			waveShape.setFillColor(sf::Color::Transparent);
 
-		window.draw(sprite);
-		window.draw(waveShape);
-
+			window.draw(waveShape);
+		}
 
 		//--------------------------------------------------------------------
+		++tick;
 		window.display();
+
 	}
 
 	physics.stop();

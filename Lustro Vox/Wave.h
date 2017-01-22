@@ -6,7 +6,7 @@
 class Wave {
 
 public:
-	Wave(float x, float y, float forces);
+	Wave(float x, float y, float forces, float rate);
 	~Wave() = default;
 	void update();
 	float getX() { return position.x; };
@@ -19,6 +19,7 @@ private:
 	
 	float radius{ 0.0f };
 	float force{ 0.0f };
+	float expansion_rate{ 0.0f };
 
 };
 

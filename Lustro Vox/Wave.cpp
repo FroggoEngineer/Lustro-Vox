@@ -1,14 +1,15 @@
 #include "Wave.h"
 
-Wave::Wave(float x, float y, float forces) {
+Wave::Wave(float x, float y, float forces, float rate) {
 	position.x = x;
 	position.y = y;
 	force = forces;
+	expansion_rate = rate;
 }
 
 void Wave::update()
 {
-	radius += 0.0001f;
+	radius += expansion_rate;
 }
 
 sf::Vector2<float> Wave::getRealPos(float width, float height)

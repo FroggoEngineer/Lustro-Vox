@@ -9,11 +9,11 @@
 using namespace std;
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(640, 360), "SFML works!", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(640, 360), "SFML works!");
 	sf::Vector2u size = window.getSize();
-
-	int width = 160;
-	int height = 90;
+	int scaleWidth = size.x;
+	int width = 320;
+	int height = 180;
 
 	Physics physics { width, height };
 
@@ -42,6 +42,14 @@ int main()
 	physics.setWaves(waves);
 
 	window.setVerticalSyncEnabled(true);
+
+	sf::Shader shader;
+
+	if (shader.loadFromFile("rage.frag", sf::Shader::Fragment))
+	{
+		
+	}
+
 	while (window.isOpen())
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
@@ -52,7 +60,7 @@ int main()
 		auto notes = midi.getNote();
 		for (auto note : notes) {
 			std::cout << "Tone: " << (int)note.first << " Velocity: " << note.second << std::endl;
-			Wave w1{ ((float)note.first)/11.0f, 0.5626f, 0.1f*note.second, 0.003f/note.second };
+			Wave w1{ ((float)note.first)/11.0f, 0.5626f, 0.4f*note.second, 0.01f*note.second };
 			physics.addWave(w1);
 		}
 
@@ -99,29 +107,30 @@ int main()
 
 				
 		tex.update((sf::Uint8*)pixels);
-		window.draw(sprite);
+		
 		
 		//Pixel texture
 		sprite.setTexture(tex);
 		sprite.setScale(pixel_width, pixel_height);
-
+		window.draw(sprite);
 		// Remove too large waves
 		if (tick % 60 == 0) {
 			physics.delWaves();
 
 		}
-
+		
 		//Waves
 		for (int i{ 0 }; i < waves->size(); ++i) {
 			sf::Vector2<float> tmp{ 1.0f, 1.0f };
-			tmp *= (*waves)[i].getRadius()*window.getSize().x;
-			waveShape.setPosition(((*waves)[i].getRealPos(window.getSize().x, window.getSize().x)-tmp)); // Don't ask...
-			waveShape.setRadius((*waves)[i].getRadius()*window.getSize().x);
-			waveShape.setOutlineThickness(window.getSize().x/100);
+			tmp *= (*waves)[i].getRadius()*scaleWidth;
+			waveShape.setPosition(((*waves)[i].getRealPos(scaleWidth, scaleWidth)-tmp)); // Don't ask...
+			waveShape.setRadius((*waves)[i].getRadius()*scaleWidth);
+			waveShape.setOutlineThickness(scaleWidth/100);
 			waveShape.setOutlineColor(sf::Color(colors::COLORS[(i%15)+1]));
 
 			waveShape.setFillColor(sf::Color::Transparent);
-
+			//shader.setParameter("rnd", 0.5f);
+			//shader.setParameter("intensity", 1.5f);
 			window.draw(waveShape);
 		}
 
